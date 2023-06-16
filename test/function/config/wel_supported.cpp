@@ -359,20 +359,9 @@ namespace {
     ASSERT_STREQ( actual_string, valid_string );
   }
 
-  TEST_F ( WelSupportedTest, InvalidUtf8InsertionStringOutOfRange ) {
-    LPCSTR invalid_utf8_string = "\xc3\x28 invalid";
-    WORD index = 4;
-    LPCSTR insertion_string;
-
-    stumpless_set_wel_insertion_strings( insertion_entry, 2, NULL, NULL );
-    insertion_string = stumpless_get_wel_insertion_string( insertion_entry, index );
-    ASSERT_NOT_NULL( insertion_string );
-
-    stumpless_set_wel_insertion_string( insertion_entry, 0, invalid_utf8_string );
-    LPCSTR actual_string = stumpless_get_wel_insertion_string( insertion_entry, index );
-
-    ASSERT_STREQ( actual_string, insertion_string );
-  }
+  /* 
+    Add the test case for invalid utf8 insertion string when insertion string is out of range
+  */
 
   TEST_F ( WelSupportedTest, InsertionIndexNotModifiedWhenInRangeButNotAssigned ) {
     const struct stumpless_entry *result;

@@ -368,6 +368,7 @@ namespace {
   }
 
   TEST_F ( WelSupportedTest, InsertionIndexNotModifiedWhenOutOfRange ) {
+    const struct stumpless_error *error;
     LPCSTR valid_string = "valid string";
     LPCSTR invalid_utf8_string = "\xc3\x28 invalid";
     WORD index = 4;

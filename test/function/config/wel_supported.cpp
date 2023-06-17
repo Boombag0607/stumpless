@@ -367,9 +367,23 @@ namespace {
     ASSERT_STREQ( actual_string, valid_string );
   }
 
-  /* 
-    Add the test case for invalid utf8 insertion string when insertion string is out of range
-  */
+  TEST_F ( WelSupportedTest, InsertionIndexNotModifiedWhenOutOfRange ) {
+    LPCSTR valid_string = "valid string";
+    LPCSTR invalid_utf8_string = "\xc3\x28 invalid";
+    WORD index = 4;
+
+    stumpless_set_wel_insertion_string( insertion_entry, index, valid_string );
+    EXPECT_ERROR_ID_EQ( STUMPLESS_INDEX_OUT_OF_BOUNDS );
+
+    stumpless_set_wel_insertion_string( insertion_entry, 2, invalid_utf8_string );
+    EXPECT_ERROR_ID_EQ( STUMPLESS_INVALID_ENCODING );
+
+    LPCSTR insertion_string = stumpless_get_wel_insertion_string( insertion_entry, 2 );
+    LPCSTR actual_string = stumpless_get_wel_insertion_string( insertion_entry, index );
+
+    ASSERT_NULL( insertion_string );
+    ASSERT_STREQ( actual_string, valid_string );
+  }
 
   TEST_F ( WelSupportedTest, InsertionIndexNotModifiedWhenInRangeButNotAssigned ) {
     LPCSTR invalid_utf8_string = "\xc3\x28 invalid";
